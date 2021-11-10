@@ -8,7 +8,11 @@ public class Character_Movement : MonoBehaviour
 {
     private Rigidbody2D m_RB;
 
-    private float m_Speed = 1f;
+    [SerializeField]
+    private float m_Speed;
+
+    [SerializeField]
+    private float m_RotationSpeed;
 
     private float m_JumpForce = 5f;
 
@@ -30,11 +34,11 @@ public class Character_Movement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetAxis("Horizontal") < 0)
+        if (Input.GetAxisRaw("Horizontal") < 0 && IsGrounded())
         {
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
-        else
+        else if(Input.GetAxisRaw("Horizontal") > 0 && IsGrounded())
         {
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
@@ -59,21 +63,39 @@ public class Character_Movement : MonoBehaviour
     public void ApplyMovement()
     {
         //Move horizontally
-        float xInput = Input.GetAxis("Horizontal");
+        float xInput = Input.GetAxisRaw("Horizontal");
 
         float xForce = xInput * m_Speed;
 
-        Vector2 force = new Vector2(xForce, 0f);
+        float RotationForce = xInput * m_RotationSpeed;
 
-        m_RB.AddForce(force, ForceMode2D.Impulse);
+        Vector2 force = new Vector2(xForce, 0f);
 
         //Jump
 
         if(IsGrounded())
         {
-            Vector2 jumpDirection = new Vector2(0f, Input.GetAxis("Jump"));
+            m_RB.AddForce(force, ForceMode2D.Impulse);
+
+            Vector2 jumpDirection = new Vector2(0f, Input.GetAxisRaw("Jump"));
 
             m_RB.AddForce(jumpDirection * m_JumpForce, ForceMode2D.Impulse);
+        }
+        else
+        {
+
+            Vector3 RotationDirection = new Vector3(0f, 0f, RotationForce);
+            Vector3 InverseRotation = new Vector3(0f, 0f, -RotationForce);
+
+            if (Input.GetAxis("Horizontal") > 0.1f)
+            {
+                transform.Rotate(InverseRotation * Time.fixedDeltaTime);
+            }
+            else if(Input.GetAxis("Horizontal") < 0.1f)
+            {
+                transform.Rotate(InverseRotation * Time.fixedDeltaTime);
+
+            }
         }
         
         
