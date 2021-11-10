@@ -7,6 +7,7 @@ public class SceneSwitcher : MonoBehaviour
 {
     private int m_CurrentLevel = 0;
     [SerializeField] private int m_LastSceneIndex;
+   
     
     private void Awake()
     {

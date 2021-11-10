@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 public class PlayerDoorInteraction : MonoBehaviour
 {
-    private GameObject m_sceneSwitcher;
+    private SceneSwitcher m_sceneSwitcher;
     private Interaction m_DoorInteract;
     public TypeOfDoor m_DoorSelected;
     
@@ -13,7 +13,7 @@ public class PlayerDoorInteraction : MonoBehaviour
     private void Start()
     {
         m_DoorSelected = TypeOfDoor.NONE;
-        m_sceneSwitcher = GameObject.Find("ManagerObject");
+       
     }
 
     private void Update()
@@ -24,19 +24,19 @@ public class PlayerDoorInteraction : MonoBehaviour
             {
                 if(DoorSelected(m_DoorInteract.m_DoorType))
                 {
-                    if(m_DoorSelected == TypeOfDoor.GREEN)
+                    if(m_DoorInteract.m_DoorType == TypeOfDoor.GREEN)
                     {
-                        m_sceneSwitcher.GetComponent<SceneSwitcher>().ChangeScene(1);
+                        m_sceneSwitcher.ChangeScene(1);
                         m_DoorInteract = null;
                     }
-                    else if(m_DoorSelected == TypeOfDoor.BLUE)
+                    else if(m_DoorInteract.m_DoorType == TypeOfDoor.BLUE)
                     {
-                        m_sceneSwitcher.GetComponent<SceneSwitcher>().ChangeScene(2);
+                        m_sceneSwitcher.ChangeScene(2);
                         m_DoorInteract = null;
                     }
-                    else if(m_DoorSelected == TypeOfDoor.RED)
+                    else if(m_DoorInteract.m_DoorType == TypeOfDoor.RED)
                     {
-                        m_sceneSwitcher.GetComponent<SceneSwitcher>().ChangeScene(3);
+                        m_sceneSwitcher.ChangeScene(3);
                         m_DoorInteract = null;
                     }
                    
