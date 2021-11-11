@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerDoorInteraction : MonoBehaviour
 {
-    private SceneSwitcher m_sceneSwitcher;
+    public SceneSwitcher m_sceneSwitcher;
     private Interaction m_DoorInteract;
     public TypeOfDoor m_DoorSelected;
     
@@ -14,32 +14,35 @@ public class PlayerDoorInteraction : MonoBehaviour
     {
         m_DoorSelected = TypeOfDoor.NONE;
        
+       
     }
 
     private void Update()
     {
+        //If W is pressed and the character is triggering the door, change the scene
         if(Input.GetKeyDown(KeyCode.W))
         {
             if(m_DoorInteract != null)
             {
                 if(DoorSelected(m_DoorInteract.m_DoorType))
                 {
-                    if(m_DoorInteract.m_DoorType == TypeOfDoor.GREEN)
+                    
+                    if (m_DoorInteract.m_DoorType == TypeOfDoor.GREEN)
                     {
                         m_sceneSwitcher.ChangeScene(1);
-                        m_DoorInteract = null;
+
                     }
-                    else if(m_DoorInteract.m_DoorType == TypeOfDoor.BLUE)
+                    else if (m_DoorInteract.m_DoorType == TypeOfDoor.BLUE)
                     {
                         m_sceneSwitcher.ChangeScene(2);
-                        m_DoorInteract = null;
+
                     }
-                    else if(m_DoorInteract.m_DoorType == TypeOfDoor.RED)
+                    else if (m_DoorInteract.m_DoorType == TypeOfDoor.RED)
                     {
                         m_sceneSwitcher.ChangeScene(3);
-                        m_DoorInteract = null;
+
                     }
-                   
+
 
                 }
                 
@@ -49,6 +52,7 @@ public class PlayerDoorInteraction : MonoBehaviour
 
     public bool DoorSelected(TypeOfDoor doorColor)
     {
+        //Set the door color to the one the character is colliding with
         if(m_DoorSelected != doorColor)
         {
             m_DoorSelected = doorColor;
@@ -60,6 +64,7 @@ public class PlayerDoorInteraction : MonoBehaviour
 
     public void UpdateInteractObject(Interaction door)
     {
+
         m_DoorInteract = door;
         
         if(m_DoorInteract == null)

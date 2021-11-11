@@ -5,18 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-    private int m_CurrentLevel = 0;
-    [SerializeField] private int m_LastSceneIndex;
-   
     
-    private void Awake()
-    {
-        SceneManager.LoadScene("Level" + m_CurrentLevel.ToString(), LoadSceneMode.Single);
-    }
+    private int m_CurrentLevel = 1;
+    [SerializeField] private int m_LastSceneIndex;
 
+    //Changes the screen into a new one
     public void ChangeScene(int level)
     {
-        SceneManager.UnloadSceneAsync("Level" + m_CurrentLevel.ToString());
+        if(m_CurrentLevel != 1)
+        {
+            SceneManager.UnloadSceneAsync("Level" + m_CurrentLevel.ToString());
+        }
+        
         m_CurrentLevel = level;
         m_CurrentLevel %= m_LastSceneIndex;
         SceneManager.LoadScene("Level" + m_CurrentLevel.ToString(), LoadSceneMode.Single);
