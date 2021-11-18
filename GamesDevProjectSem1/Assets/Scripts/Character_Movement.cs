@@ -16,13 +16,17 @@ public class Character_Movement : MonoBehaviour
     [SerializeField]
     private float m_RotationSpeed;
 
-    private float m_JumpForce = 5f;
+    private float m_JumpForce = 2f;
 
     private float m_MaxSpeed = 10f;
 
     private bool m_EnableCapVelocity = true;
 
-    private BoxCollider2D boxCollider2D;
+    private BoxCollider2D m_PlayerBoxCollider2D;
+
+    private CapsuleCollider2D m_PlayerCapsuleCollider2D;
+
+    private GameObject m_Ground;
 
     [SerializeField] private LayerMask groundLayerMask;
 
@@ -31,9 +35,14 @@ public class Character_Movement : MonoBehaviour
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
-        boxCollider2D = transform.GetComponent<BoxCollider2D>();
+
+        m_PlayerBoxCollider2D = transform.GetComponent<BoxCollider2D>();
+
+        m_PlayerCapsuleCollider2D = transform.GetComponent<CapsuleCollider2D>();
 
         m_Animator = GetComponent<Animator>();
+
+        m_Ground = new GameObject();
     }
 
     private void Update()
@@ -52,7 +61,7 @@ public class Character_Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+       
         ApplyMovement();
 
         if (m_EnableCapVelocity)
@@ -86,21 +95,23 @@ public class Character_Movement : MonoBehaviour
                 m_RB.AddForce(Vector2.up * m_JumpForce, ForceMode2D.Impulse);
                 m_Animator.SetBool("IsJumping", true);
             }
+
+           
             
         }
         else
         {
+           
             m_Animator.SetBool("IsJumping", false);
-            Vector3 RotationDirection = new Vector3(0f, 0f, RotationForce);
-            Vector3 InverseRotation = new Vector3(0f, 0f, -RotationForce);
+            Vector3 Rotation = new Vector3(0f, 0f, -RotationForce);
 
             if (Input.GetAxis("Horizontal") > 0.1f)
             {
-                transform.Rotate(InverseRotation * Time.fixedDeltaTime);
+                transform.Rotate(Rotation * Time.fixedDeltaTime);
             }
             else if(Input.GetAxis("Horizontal") < 0.1f)
             {
-                transform.Rotate(InverseRotation * Time.fixedDeltaTime);
+                transform.Rotate(Rotation * Time.fixedDeltaTime);
 
             }
         }
@@ -121,9 +132,8 @@ public class Character_Movement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit2d = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, 0.1f, groundLayerMask);
+        RaycastHit2D raycastHit2d = Physics2D.CapsuleCast(m_PlayerCapsuleCollider2D.bounds.center, m_PlayerCapsuleCollider2D.bounds.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.1f, groundLayerMask);
         return raycastHit2d.collider != null;
-
     }
    
 
