@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlayerDoorInteraction : MonoBehaviour
+public class PlayerDoorController : MonoBehaviour
 {
     public SceneSwitcher m_sceneSwitcher;
-    private Interaction m_DoorInteract;
+    private DoorInteraction m_DoorInteract;
     public TypeOfDoor m_DoorSelected;
     
 
@@ -62,7 +62,7 @@ public class PlayerDoorInteraction : MonoBehaviour
         return false;
     }
 
-    public void UpdateInteractObject(Interaction door)
+    public void UpdateDoorInteractObject(DoorInteraction door)
     {
 
         m_DoorInteract = door;

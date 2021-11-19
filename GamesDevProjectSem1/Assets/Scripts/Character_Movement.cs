@@ -88,6 +88,8 @@ public class Character_Movement : MonoBehaviour
 
         if(IsGrounded())
         {
+            m_RB.gravityScale = 4f;
+
             m_RB.AddForce(force, ForceMode2D.Impulse);
 
             if(Input.GetButton("Jump"))
@@ -101,7 +103,8 @@ public class Character_Movement : MonoBehaviour
         }
         else
         {
-           
+            m_RB.gravityScale = 1f;
+
             m_Animator.SetBool("IsJumping", false);
             Vector3 Rotation = new Vector3(0f, 0f, -RotationForce);
 

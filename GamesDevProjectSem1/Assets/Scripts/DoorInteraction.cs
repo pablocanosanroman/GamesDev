@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Interaction : MonoBehaviour
+public class DoorInteraction : MonoBehaviour
 {
     public TypeOfDoor m_DoorType;
 
@@ -12,7 +12,7 @@ public class Interaction : MonoBehaviour
     {
         if(collision.transform.root.CompareTag("Player"))
         {
-            collision.transform.root.GetComponent<PlayerDoorInteraction>().UpdateInteractObject(this);
+            collision.transform.root.GetComponent<PlayerDoorController>().UpdateDoorInteractObject(this);
         }
     }
 
@@ -20,7 +20,7 @@ public class Interaction : MonoBehaviour
     {
         if(collision.transform.root.CompareTag("Player"))
         {
-            collision.transform.root.GetComponent<PlayerDoorInteraction>().UpdateInteractObject(null);
+            collision.transform.root.GetComponent<PlayerDoorController>().UpdateDoorInteractObject(null);
         }
     }
 }
