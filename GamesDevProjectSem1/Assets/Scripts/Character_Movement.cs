@@ -16,22 +16,19 @@ public class Character_Movement : MonoBehaviour
     [SerializeField]
     private float m_RotationSpeed;
 
-    private float m_JumpForce = 2f;
+    private float m_JumpForce = 4f;
 
-    private float m_MaxSpeed = 10f;
+    public float m_MaxSpeed = 10f;
 
-    private bool m_EnableCapVelocity = true;
+    public bool m_EnableCapVelocity = true;
 
     private BoxCollider2D m_PlayerBoxCollider2D;
 
     private CapsuleCollider2D m_PlayerCapsuleCollider2D;
 
-    private GameObject m_Ground;
+    [SerializeField] private LayerMask m_GroundLayerMask;
 
-    [SerializeField] private LayerMask groundLayerMask;
-
-    
-
+    private RaycastHit2D m_RaycastHit2d;
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
@@ -41,8 +38,6 @@ public class Character_Movement : MonoBehaviour
         m_PlayerCapsuleCollider2D = transform.GetComponent<CapsuleCollider2D>();
 
         m_Animator = GetComponent<Animator>();
-
-        m_Ground = new GameObject();
     }
 
     private void Update()
@@ -88,8 +83,9 @@ public class Character_Movement : MonoBehaviour
 
         if(IsGrounded())
         {
-            m_RB.gravityScale = 4f;
-
+            Debug.Log("Grounded");
+            m_RB.gravityScale = 7f;
+            SlopeRotationCheck();
             m_RB.AddForce(force, ForceMode2D.Impulse);
 
             if(Input.GetButton("Jump"))
@@ -103,8 +99,8 @@ public class Character_Movement : MonoBehaviour
         }
         else
         {
-            m_RB.gravityScale = 1f;
 
+            m_RB.gravityScale = 1f;
             m_Animator.SetBool("IsJumping", false);
             Vector3 Rotation = new Vector3(0f, 0f, -RotationForce);
 
@@ -133,10 +129,19 @@ public class Character_Movement : MonoBehaviour
         m_RB.velocity = new Vector2(CappedXVelocity, CappedYVelocity);
     }
 
+    private void SlopeRotationCheck()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(m_PlayerCapsuleCollider2D.bounds.center, -transform.up, m_PlayerCapsuleCollider2D.bounds.size.y, m_GroundLayerMask);
+        transform.up = hit.normal;
+    }
+
+    
+
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit2d = Physics2D.CapsuleCast(m_PlayerCapsuleCollider2D.bounds.center, m_PlayerCapsuleCollider2D.bounds.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.1f, groundLayerMask);
-        return raycastHit2d.collider != null;
+        m_RaycastHit2d = Physics2D.CapsuleCast(m_PlayerCapsuleCollider2D.bounds.center, m_PlayerCapsuleCollider2D.bounds.size, CapsuleDirection2D.Horizontal, 0f, -transform.up, 0.1f, m_GroundLayerMask);
+        return m_RaycastHit2d.collider != null;
+        
     }
    
 
