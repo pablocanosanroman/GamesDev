@@ -83,7 +83,7 @@ public class Character_Movement : MonoBehaviour
 
         if(IsGrounded())
         {
-            Debug.Log("Grounded");
+            
             m_RB.gravityScale = 7f;
             SlopeRotationCheck();
             m_RB.AddForce(force, ForceMode2D.Impulse);

@@ -8,6 +8,7 @@ public class PlayerSpeedBController : MonoBehaviour
     private Rigidbody2D m_RB;
     private Character_Movement m_PlayerMovement;
     [SerializeField] private float m_SpeedBoost;
+    private float m_TimeDelay;
 
     private void Awake()
     {
@@ -17,20 +18,25 @@ public class PlayerSpeedBController : MonoBehaviour
         
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        float xPositiveInput = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
-        Vector2 force = new Vector2(xPositiveInput, 0f);
 
         if (m_SpeedBInteract != null)
         {
             m_PlayerMovement.m_EnableCapVelocity = false;
-            m_RB.AddForce(force * m_SpeedBoost, ForceMode2D.Impulse);
-            
+            m_RB.AddForce(Vector2.right * m_SpeedBoost, ForceMode2D.Impulse);
+            m_TimeDelay = 0f;
+
         }
         else
         {
-            StartCoroutine(ReEnableCapVelocity());
+            m_TimeDelay++;
+            if(m_TimeDelay >= 7f)
+            {
+                m_PlayerMovement.m_EnableCapVelocity = true;
+                m_TimeDelay = 0f;
+            }
+           
         }
         
         
@@ -44,13 +50,7 @@ public class PlayerSpeedBController : MonoBehaviour
         {
             m_SpeedBInteract = speedBoost;
         }
-            
-    }
 
-    private IEnumerator ReEnableCapVelocity()
-    {
-        m_PlayerMovement.m_EnableCapVelocity = true;
-        yield return new WaitForSeconds(2.5f);
     }
 
 

@@ -17,7 +17,7 @@ public class PlayerJPController : MonoBehaviour
     {
         if(m_JumpPInteract != null)
         {
-            m_RB.AddForce(Vector2.up * m_JumpBoost, ForceMode2D.Impulse);
+            m_RB.AddForce(transform.up * m_JumpBoost, ForceMode2D.Impulse);
         }
     }
 
