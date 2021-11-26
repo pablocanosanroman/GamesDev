@@ -6,7 +6,8 @@ public class PlayerJPController : MonoBehaviour
 {
     private JumpPlatformInteraction m_JumpPInteract;
     private Rigidbody2D m_RB;
-    [SerializeField] private float m_JumpBoost;
+    [SerializeField] private float m_JumpBoostUp;
+    [SerializeField] private float m_JumpBoostRight;
 
     private void Awake()
     {
@@ -17,7 +18,8 @@ public class PlayerJPController : MonoBehaviour
     {
         if(m_JumpPInteract != null)
         {
-            m_RB.AddForce(transform.up * m_JumpBoost, ForceMode2D.Impulse);
+            m_RB.AddForce(Vector2.up * m_JumpBoostUp, ForceMode2D.Impulse);
+            m_RB.AddForce(Vector2.right * m_JumpBoostRight, ForceMode2D.Impulse);
         }
     }
 
@@ -30,4 +32,5 @@ public class PlayerJPController : MonoBehaviour
             m_JumpPInteract = jumpPlatform;
         }
     }
+
 }

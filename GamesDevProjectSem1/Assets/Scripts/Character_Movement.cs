@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Character_Movement : MonoBehaviour
 {
-    private Rigidbody2D m_RB;
+    public Rigidbody2D m_RB;
 
     private Animator m_Animator;
 
@@ -16,7 +16,7 @@ public class Character_Movement : MonoBehaviour
     [SerializeField]
     private float m_RotationSpeed;
 
-    private float m_JumpForce = 4f;
+    private float m_JumpForce = 4.3f;
 
     public float m_MaxSpeed = 10f;
 
@@ -84,7 +84,7 @@ public class Character_Movement : MonoBehaviour
         if(IsGrounded())
         {
             
-            m_RB.gravityScale = 7f;
+            m_RB.gravityScale = 8f;
             SlopeRotationCheck();
             m_RB.AddForce(force, ForceMode2D.Impulse);
 
