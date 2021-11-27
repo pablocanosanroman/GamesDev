@@ -20,6 +20,8 @@ public class Character_Movement : MonoBehaviour
 
     public float m_MaxSpeed = 10f;
 
+    private float m_ActionSpeedBoost = 12f;
+
     public bool m_EnableCapVelocity = true;
 
     private BoxCollider2D m_PlayerBoxCollider2D;
@@ -28,7 +30,11 @@ public class Character_Movement : MonoBehaviour
 
     [SerializeField] private LayerMask m_GroundLayerMask;
 
-    private RaycastHit2D m_RaycastHit2d;
+    private RaycastHit2D m_RaycastHit2dBoard;
+
+    private RaycastHit2D m_RaycastHit2dHead;
+
+
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
@@ -42,34 +48,46 @@ public class Character_Movement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetAxisRaw("Horizontal") < 0 && IsGrounded())
+        if(gameObject != null)
         {
-            gameObject.GetComponent<SpriteRenderer>().flipX = true;
-        }
-        else if(Input.GetAxisRaw("Horizontal") > 0 && IsGrounded())
-        {
-            gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            if (Input.GetAxisRaw("Horizontal") < 0 && IsGrounded())
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (Input.GetAxisRaw("Horizontal") > 0 && IsGrounded())
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            }
+
         }
 
-        
+
     }
 
     private void FixedUpdate()
     {
-       
-        ApplyMovement();
-
-        if (m_EnableCapVelocity)
+        if(gameObject != null)
         {
-            CapVelocity();
-        }
+            ApplyMovement();
 
-        
+            if (m_EnableCapVelocity)
+            {
+                CapVelocity();
+            }
+
+            if (IsDead())
+            {
+                    Destroy(gameObject);
+            }
+
+
+        }
 
     }
 
     public void ApplyMovement()
     {
+        
         //Move horizontally
         float xInput = Input.GetAxisRaw("Horizontal");
 
@@ -107,11 +125,12 @@ public class Character_Movement : MonoBehaviour
             if (Input.GetAxis("Horizontal") > 0.1f)
             {
                 transform.Rotate(Rotation * Time.fixedDeltaTime);
+                
             }
             else if(Input.GetAxis("Horizontal") < 0.1f)
             {
                 transform.Rotate(Rotation * Time.fixedDeltaTime);
-
+                
             }
         }
         
@@ -139,11 +158,16 @@ public class Character_Movement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        m_RaycastHit2d = Physics2D.CapsuleCast(m_PlayerCapsuleCollider2D.bounds.center, m_PlayerCapsuleCollider2D.bounds.size, CapsuleDirection2D.Horizontal, 0f, -transform.up, 0.1f, m_GroundLayerMask);
-        return m_RaycastHit2d.collider != null;
+        m_RaycastHit2dBoard = Physics2D.CapsuleCast(m_PlayerCapsuleCollider2D.bounds.center, m_PlayerCapsuleCollider2D.bounds.size, CapsuleDirection2D.Horizontal, 0f, -transform.up, 0.1f, m_GroundLayerMask);
+        return m_RaycastHit2dBoard.collider != null;
         
     }
    
+    private bool IsDead()
+    {
+        m_RaycastHit2dHead = Physics2D.BoxCast(m_PlayerBoxCollider2D.bounds.center, m_PlayerBoxCollider2D.bounds.size, 0f, transform.up, 0.1f, m_GroundLayerMask);
+        return m_RaycastHit2dHead.collider != null;
+    }
 
 
 }

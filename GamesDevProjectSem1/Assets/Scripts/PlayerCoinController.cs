@@ -7,8 +7,8 @@ public class PlayerCoinController : MonoBehaviour
     private CoinInteraction m_CoinInteract;
     private Character_Movement m_PlayerMovement;
     private int m_MaxCoins = 10;
-    private int m_CurrentCoins;
-    private float m_MaxSpeedIncreased = (10f/100f);
+    public int m_CurrentCoins;
+    private float m_MaxSpeedIncreased = (5f/100f);
 
     private void Awake()
     {
@@ -17,10 +17,11 @@ public class PlayerCoinController : MonoBehaviour
 
     private void Update()
     {
-        if(m_CoinInteract != null)
+        
+        if (m_CoinInteract != null)
         {
-            Destroy(m_CoinInteract.gameObject);
             m_CurrentCoins++;
+            
             m_PlayerMovement.m_MaxSpeed += m_PlayerMovement.m_MaxSpeed * m_MaxSpeedIncreased;
 
 
@@ -30,7 +31,8 @@ public class PlayerCoinController : MonoBehaviour
                 
             }
 
-            
+            Destroy(m_CoinInteract.gameObject);
+
         }
     }
 

@@ -11,7 +11,10 @@ public class CameraChase : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Follow();
+        if(target != null)
+        {
+            Follow();
+        }
     }
 
     void Follow()
