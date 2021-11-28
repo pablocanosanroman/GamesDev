@@ -72,12 +72,12 @@ public class Character_Movement : MonoBehaviour
 
             if (m_EnableCapVelocity)
             {
-                CapVelocity();
+               CapVelocity();
             }
 
             if (IsDead())
             {
-                    Destroy(gameObject);
+               Destroy(gameObject);
             }
 
 
