@@ -25,21 +25,9 @@ public class PlayerSpeedBController : MonoBehaviour
         {
             m_PlayerMovement.m_EnableCapVelocity = false;
             m_RB.AddForce(Vector2.right * m_SpeedBoost, ForceMode2D.Impulse);
-            m_TimeDelay = 0f;
+            StartCoroutine(SpeedBoostTime());
 
         }
-        else
-        {
-            m_TimeDelay++;
-            if(m_TimeDelay >= 7f)
-            {
-                m_PlayerMovement.m_EnableCapVelocity = true;
-                m_TimeDelay = 0f;
-            }
-           
-        }
-        
-        
     }
 
     public void UpdateJPInteractableObject(SpeedBoostInteraction speedBoost)
@@ -51,6 +39,13 @@ public class PlayerSpeedBController : MonoBehaviour
             m_SpeedBInteract = speedBoost;
         }
 
+    }
+
+    IEnumerator SpeedBoostTime()
+    {
+        yield return new WaitForSeconds(0.7f);
+        m_PlayerMovement.m_EnableCapVelocity = true;
+            
     }
 
 

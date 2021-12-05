@@ -8,7 +8,6 @@ public class PlayerDoorController : MonoBehaviour
     public SceneSwitcher m_sceneSwitcher;
     private DoorInteraction m_DoorInteract;
     public TypeOfDoor m_DoorSelected;
-    
 
     private void Start()
     {
@@ -29,18 +28,22 @@ public class PlayerDoorController : MonoBehaviour
                     
                     if (m_DoorInteract.m_DoorType == TypeOfDoor.GREEN)
                     {
+                        
                         m_sceneSwitcher.ChangeScene(1);
+                        
 
                     }
                     else if (m_DoorInteract.m_DoorType == TypeOfDoor.BLUE)
                     {
+                       
                         m_sceneSwitcher.ChangeScene(2);
-
+                        
                     }
                     else if (m_DoorInteract.m_DoorType == TypeOfDoor.RED)
                     {
+                        
                         m_sceneSwitcher.ChangeScene(3);
-
+                        
                     }
 
 

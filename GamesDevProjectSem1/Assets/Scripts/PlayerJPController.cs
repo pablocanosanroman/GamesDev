@@ -6,6 +6,8 @@ public class PlayerJPController : MonoBehaviour
 {
     private JumpPlatformInteraction m_JumpPInteract;
     private Rigidbody2D m_RB;
+    private float m_MaxJump = 18f;
+    private bool m_EnableJumpCap;
     [SerializeField] private float m_JumpBoostUp;
     [SerializeField] private float m_JumpBoostRight;
 
@@ -16,10 +18,19 @@ public class PlayerJPController : MonoBehaviour
 
     private void Update()
     {
-        if(m_JumpPInteract != null)
+        m_EnableJumpCap = false;
+
+        if (m_JumpPInteract != null)
         {
+            m_EnableJumpCap = true;
             m_RB.AddForce(Vector2.up * m_JumpBoostUp, ForceMode2D.Impulse);
             m_RB.AddForce(Vector2.right * m_JumpBoostRight, ForceMode2D.Impulse);
+            if (m_EnableJumpCap)
+            {
+                CapJumpVelocity();
+                StartCoroutine(CapJumpTime());
+            }
+
         }
     }
 
@@ -31,6 +42,22 @@ public class PlayerJPController : MonoBehaviour
         {
             m_JumpPInteract = jumpPlatform;
         }
+    }
+
+    public void CapJumpVelocity()
+    {
+        //Take the minimun between those 2 values, multiply by velocity sign in y
+        float CappedXVelocity = m_RB.velocity.x;
+        float CappedYVelocity = Mathf.Min(Mathf.Abs(m_RB.velocity.y), m_MaxJump) * Mathf.Sign(m_RB.velocity.y);
+
+        m_RB.velocity = new Vector2(CappedXVelocity, CappedYVelocity);
+        
+    }
+
+    IEnumerator CapJumpTime()
+    {
+        yield return new WaitForSeconds(0.2f);
+        m_EnableJumpCap = false;
     }
 
 }

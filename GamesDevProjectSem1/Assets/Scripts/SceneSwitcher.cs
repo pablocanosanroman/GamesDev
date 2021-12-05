@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
     
-    private int m_CurrentLevel = 1;
+    public int m_CurrentLevel = 1;
     [SerializeField] private int m_LastSceneIndex;
 
     //Changes the screen into a new one
