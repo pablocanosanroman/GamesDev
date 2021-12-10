@@ -8,7 +8,6 @@ public class PlayerSpeedBController : MonoBehaviour
     private Rigidbody2D m_RB;
     private Character_Movement m_PlayerMovement;
     [SerializeField] private float m_SpeedBoost;
-    private float m_TimeDelay;
 
     private void Awake()
     {

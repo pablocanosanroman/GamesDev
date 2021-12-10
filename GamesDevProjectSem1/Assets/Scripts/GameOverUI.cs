@@ -7,6 +7,7 @@ public class GameOverUI : MonoBehaviour
 {
     public void GetToStart()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
 
     }

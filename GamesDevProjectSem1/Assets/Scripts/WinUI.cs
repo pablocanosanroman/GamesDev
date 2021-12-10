@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class WinUI : MonoBehaviour
 {
     public Text m_PlayerTime;
+    public Text m_PlayerName;
     [SerializeField] private GameObject m_Goal;
     [SerializeField] private GameObject m_InGameCanvas;
     [SerializeField] private GameObject m_WinCanvas;

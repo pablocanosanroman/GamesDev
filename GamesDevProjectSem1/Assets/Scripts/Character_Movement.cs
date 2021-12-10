@@ -21,21 +21,13 @@ public class Character_Movement : MonoBehaviour
 
     public float m_MaxSpeed = 10f;
 
-    private Vector2 m_InitialJumpUp;
-
-    private Vector2 m_PreviousJumpUp;
-
-    private float m_PreviousJumpRotation;
-
-    private float m_AddedAirRotation;
-
-    private bool m_ForwardFlip;
-
+    private Vector3 m_JumpRotation;
+    private float m_FlipAngle;
     private int m_FlipCount;
 
     private bool m_WhatsGrounded;
 
-    private float m_ActionSpeedBoost = 12f;
+    private float m_ActionSpeedBoost = 1f;
 
     public bool m_EnableCapVelocity = true;
 
@@ -74,6 +66,8 @@ public class Character_Movement : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
 
+            
+
         }
 
 
@@ -96,7 +90,11 @@ public class Character_Movement : MonoBehaviour
                 SceneManager.LoadScene(5);
             }
 
-
+            if (transform.position.y < -100)
+            {
+                Destroy(gameObject);
+                SceneManager.LoadScene(5);
+            }
         }
 
     }
@@ -117,8 +115,8 @@ public class Character_Movement : MonoBehaviour
 
         if(IsGrounded())
         {
-            m_WhatsGrounded = true;
             m_RB.gravityScale = 7.5f;
+            m_WhatsGrounded = true;
             SlopeRotationCheck();
             m_RB.AddForce(force, ForceMode2D.Impulse);
 
@@ -127,10 +125,11 @@ public class Character_Movement : MonoBehaviour
                 m_RB.AddForce(Vector2.up * m_JumpForce, ForceMode2D.Impulse);
                 m_Animator.SetBool("IsJumping", true);
             }
+
+            
         }
         else
         {
-            
             m_RB.gravityScale = 1f;
             m_Animator.SetBool("IsJumping", false);
             Vector3 Rotation = new Vector3(0f, 0f, -RotationForce);
@@ -138,42 +137,49 @@ public class Character_Movement : MonoBehaviour
             if (m_WhatsGrounded)
             {
                 m_WhatsGrounded = false;
-                m_InitialJumpUp = transform.up;
-                m_PreviousJumpRotation = 0f;
-                m_PreviousJumpUp = transform.up;
+                m_JumpRotation = transform.TransformDirection(Vector3.right);
+                m_JumpRotation.z = 0;
                 m_FlipCount = 0;
-                m_ForwardFlip = true;
-                m_AddedAirRotation = 0;
-                        Debug.ClearDeveloperConsole();
+                m_FlipAngle = 0;
+                
 
             }
-           // Debug.Log(Vector2.Dot(transform.up, transform.right));
+
             if (Input.GetAxis("Horizontal") > 0.1f)
             {
                 transform.Rotate(Rotation * Time.fixedDeltaTime);
-                       // Debug.Log(transform.localRotation.eulerAngles.z -360);
-                if(transform.rotation.z < m_PreviousJumpRotation)
-                {
-                    if(m_ForwardFlip)
-                    {
-                        m_AddedAirRotation += m_PreviousJumpRotation - transform.rotation.z;
-                        //last frames rotation value.       //current frame rotation value
-                        m_PreviousJumpRotation += 1 - Mathf.Abs(Vector2.Dot(transform.up, m_PreviousJumpUp));
-                        //Debug.Log(Vector2.Dot(m_InitialJumpUp, transform.up));
-                        m_PreviousJumpUp = transform.up;
-                    }
-                }
             }
             else if(Input.GetAxis("Horizontal") < 0.1f)
             {
                 transform.Rotate(Rotation * Time.fixedDeltaTime);
             }
 
-            
+            Vector3 facing = transform.TransformDirection(Vector3.right);
+            facing.z = 0;
+
+            float angle = Vector3.Angle(m_JumpRotation, facing);
+            if (Vector3.Cross(m_JumpRotation, facing).z < 0)
+                angle *= -1;
+
+            m_FlipAngle += angle;
+            m_JumpRotation = facing;
+
+            if (Mathf.Abs(m_FlipAngle) >= 320)
+            {
+                m_FlipCount++;
+                m_FlipAngle = 0;
+            }
         }
-        
-        
+
+        if (m_FlipCount >= 1 && m_WhatsGrounded)
+        {
+            m_EnableCapVelocity = false;
+            m_RB.AddForce(Vector2.right * m_ActionSpeedBoost * m_FlipCount, ForceMode2D.Impulse);
+            StartCoroutine(SpeedBoostTime());
             
+
+        }
+
 
     }
 
@@ -205,6 +211,13 @@ public class Character_Movement : MonoBehaviour
     {
         m_RaycastHit2dHead = Physics2D.BoxCast(m_PlayerBoxCollider2D.bounds.center, m_PlayerBoxCollider2D.bounds.size, 0f, transform.up, 0.1f, m_GroundLayerMask);
         return m_RaycastHit2dHead.collider != null;
+    }
+
+    IEnumerator SpeedBoostTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        m_EnableCapVelocity = true;
+
     }
 
 }
