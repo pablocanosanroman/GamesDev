@@ -8,7 +8,7 @@ public class PlayerCoinController : MonoBehaviour
     private Character_Movement m_PlayerMovement;
     private int m_MaxCoins = 10;
     public int m_CurrentCoins;
-    private float m_MaxSpeedIncreased = (5f/100f);
+    private float m_MaxSpeedIncreased = (7f/100f);
 
     private void Awake()
     {

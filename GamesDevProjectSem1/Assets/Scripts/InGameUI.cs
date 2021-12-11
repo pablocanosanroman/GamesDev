@@ -12,9 +12,9 @@ public class InGameUI : MonoBehaviour
     private int m_CurrentCoins;
     private float m_InitialTime;
     private float m_CurrentTime;
-    private string m_Minutes;
-    private string m_Seconds;
-    private string m_Milliseconds;
+    public int m_Minutes;
+    public int m_Seconds;
+    public float m_Milliseconds;
     
     public void Init()
     {
@@ -48,11 +48,11 @@ public class InGameUI : MonoBehaviour
     {
         m_CurrentTime = Time.time - m_InitialTime;
 
-        m_Minutes = ((int)m_CurrentTime / 60).ToString();
-        m_Seconds = ((int)m_CurrentTime % 60).ToString("00");
-        m_Milliseconds = ((m_CurrentTime * 100f) % 100f).ToString("00");
+        m_Minutes = ((int)m_CurrentTime / 60);
+        m_Seconds = ((int)m_CurrentTime % 60);
+        m_Milliseconds = ((m_CurrentTime * 100f) % 100f);
 
-        m_Timer.text = m_Minutes + ":" + m_Seconds + ":" + m_Milliseconds;
+        m_Timer.text = m_Minutes.ToString() + ":" + m_Seconds.ToString("00") + ":" + m_Milliseconds.ToString("00");
     }
 }
 

@@ -191,8 +191,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3786ace2df7a8e4dab0abf5f92b0238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CoinsText: {fileID: 0}
-  m_Timer: {fileID: 0}
+  m_CoinsText: {fileID: 5601954325887132888}
+  m_Timer: {fileID: 6599162941050297198}
+  m_Level: {fileID: 5601954325613808112}
   m_Coins: {fileID: 0}
 --- !u!1 &5601954325613808118
 GameObject:
@@ -206,7 +207,7 @@ GameObject:
   - component: {fileID: 5601954325613808113}
   - component: {fileID: 5601954325613808112}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
