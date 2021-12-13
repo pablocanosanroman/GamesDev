@@ -22,10 +22,14 @@ public class Character_Movement : MonoBehaviour
     public float m_MaxSpeed = 10f;
 
     private Vector3 m_JumpRotation;
+
     private float m_FlipAngle;
+
     private int m_FlipCount;
 
     private bool m_WhatsGrounded;
+
+    public bool m_AirGravity;
 
     private float m_ActionSpeedBoost = 1f;
 
@@ -90,7 +94,7 @@ public class Character_Movement : MonoBehaviour
                 SceneManager.LoadScene(5);
             }
 
-            if (transform.position.y < -100)
+            if (transform.position.y < -150)
             {
                 Destroy(gameObject);
                 SceneManager.LoadScene(5);
@@ -115,6 +119,7 @@ public class Character_Movement : MonoBehaviour
 
         if(IsGrounded())
         {
+            m_AirGravity = true;
             m_RB.gravityScale = 8f;
             m_WhatsGrounded = true;
             SlopeRotationCheck();
@@ -130,7 +135,14 @@ public class Character_Movement : MonoBehaviour
         }
         else
         {
-            m_RB.gravityScale = 1f;
+            if(m_AirGravity)
+            {
+                m_RB.gravityScale = 1f;
+            }
+            else
+            {
+                m_RB.gravityScale = 7f;
+            }
             m_Animator.SetBool("IsJumping", false);
             Vector3 Rotation = new Vector3(0f, 0f, -RotationForce);
 

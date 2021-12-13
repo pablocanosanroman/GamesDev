@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3080348426962803466}
   - component: {fileID: 3080348426962803467}
   - component: {fileID: 5937221239724212655}
-  - component: {fileID: 3699827752669958166}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -173,6 +172,7 @@ MonoBehaviour:
   m_Speed: 2
   m_RotationSpeed: 400
   m_MaxSpeed: 12
+  m_AirGravity: 0
   m_EnableCapVelocity: 1
   m_GroundLayerMask:
     serializedVersion: 2
@@ -207,18 +207,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0041716886, y: -0.03059056}
   m_Size: {x: 0.23379159, y: 0.10586837}
   m_Direction: 1
---- !u!114 &3699827752669958166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3080348426962803476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5cf6582ba857b24da7d33b07c3c4c72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5612982364577769333
 GameObject:
   m_ObjectHideFlags: 0
