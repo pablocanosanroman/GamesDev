@@ -7,6 +7,7 @@ public class GoalInteraction : MonoBehaviour
 {
     [SerializeField] private GameObject m_InGameCanvas;
     [SerializeField] private GameObject m_WinCanvas;
+    [SerializeField] private GameObject m_GameOverCanvas;
     public int m_Minutes;
     public int m_Seconds;
     public float m_Milliseconds;
@@ -24,6 +25,7 @@ public class GoalInteraction : MonoBehaviour
             
             m_InGameCanvas.SetActive(false);
             m_WinCanvas.SetActive(true);
+            m_GameOverCanvas.SetActive(false);
 
         }
     }

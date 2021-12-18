@@ -8,6 +8,8 @@ TagManager:
   - Door
   - GravityPlatform
   - AntiGravityPlatform
+  - GameOver
+  - InGameCanvas
   layers:
   - Default
   - TransparentFX

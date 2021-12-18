@@ -39,14 +39,6 @@ public class PlayerDoorController : MonoBehaviour
                         m_sceneSwitcher.ChangeScene(2);
                         
                     }
-                    else if (m_DoorInteract.m_DoorType == TypeOfDoor.RED)
-                    {
-                        
-                        m_sceneSwitcher.ChangeScene(3);
-                        
-                    }
-
-
                 }
                 
             }

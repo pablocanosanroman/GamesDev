@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2990200410496528216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2990200410496528223}
+  - component: {fileID: 2990200410496528222}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2990200410496528223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990200410496528216}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2990200410496528222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990200410496528216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56795f258a400d244a1decce734b02d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds:
+  - m_ClipName: Coin
+    m_Clip: {fileID: 8300000, guid: 67ad7e75d2f43f8419ddb083bcb878c0, type: 3}
+    m_Volume: 0.458
+    m_Pitch: 1.019
+    m_MixerGroup: {fileID: -7712127392237081978, guid: 0027c71ead375b4458a1979c6d379497, type: 2}
+    m_Source: {fileID: 0}
+  - m_ClipName: Jump
+    m_Clip: {fileID: 8300000, guid: fd4760370a823714889ff44276ce07d2, type: 3}
+    m_Volume: 0.43
+    m_Pitch: 1.019
+    m_MixerGroup: {fileID: -7712127392237081978, guid: 0027c71ead375b4458a1979c6d379497, type: 2}
+    m_Source: {fileID: 0}
+  - m_ClipName: SpeedBoost
+    m_Clip: {fileID: 8300000, guid: 1ee0440e545044a4391687493952dc95, type: 3}
+    m_Volume: 0.43
+    m_Pitch: 1.019
+    m_MixerGroup: {fileID: -7712127392237081978, guid: 0027c71ead375b4458a1979c6d379497, type: 2}
+    m_Source: {fileID: 0}
+  - m_ClipName: NewRecord
+    m_Clip: {fileID: 8300000, guid: 1ee0440e545044a4391687493952dc95, type: 3}
+    m_Volume: 0.43
+    m_Pitch: 1.019
+    m_MixerGroup: {fileID: -7712127392237081978, guid: 0027c71ead375b4458a1979c6d379497, type: 2}
+    m_Source: {fileID: 0}

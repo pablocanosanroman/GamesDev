@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class WinUI : MonoBehaviour
+public class WinUILvl2 : MonoBehaviour
 {
     public Text m_PlayerTime;
     public Text m_PlayerHighScore;
@@ -16,18 +16,16 @@ public class WinUI : MonoBehaviour
     [SerializeField] private GameObject m_WinCanvas;
     [SerializeField] private GameObject m_NewRecord;
     [SerializeField] private SceneSwitcher m_SceneSwitcher;
-    [SerializeField] private SoundManager m_SoundManager;
 
     private void Start()
     {
-        m_PlayerHighScore.text = PlayerPrefs.GetInt("HighScoreMinutes", 100).ToString() + ":" + PlayerPrefs.GetInt("HighScoreSeconds", 59).ToString() + ":" + PlayerPrefs.GetFloat("HighScoreMilliseconds", 99).ToString("00");
+        m_PlayerHighScore.text = PlayerPrefs.GetInt("HighScoreMinutesLvl2", 100).ToString() + ":" + PlayerPrefs.GetInt("HighScoreSecondsLvl2", 59).ToString() + ":" + PlayerPrefs.GetFloat("HighScoreMillisecondsLvl2", 99).ToString("00");
     }
 
     private void Update()
     {
-        
         PlayerTime();
-        
+
     }
 
     private void PlayerTime()
@@ -38,19 +36,18 @@ public class WinUI : MonoBehaviour
 
         m_PlayerTime.text = m_Minutes.ToString() + ":" + m_Seconds.ToString() + ":" + m_Milliseconds.ToString("00");
 
-        if(m_Minutes < PlayerPrefs.GetInt("HighScoreMinutes", 100) || ((m_Seconds < PlayerPrefs.GetInt("HighScoreSeconds", 60)) && m_Minutes == PlayerPrefs.GetInt("HighScoreMinutes")) || 
-            ((m_Milliseconds < PlayerPrefs.GetFloat("HighScoreMilliseconds", 100)) && m_Seconds == PlayerPrefs.GetInt("HighScoreSeconds") && m_Minutes == PlayerPrefs.GetInt("HighScoreMinutes")))
+        if (m_Minutes < PlayerPrefs.GetInt("HighScoreMinutesLvl2", 100) || ((m_Seconds < PlayerPrefs.GetInt("HighScoreSecondsLvl2", 60)) && m_Minutes == PlayerPrefs.GetInt("HighScoreMinutesLvl2")) ||
+            ((m_Milliseconds < PlayerPrefs.GetFloat("HighScoreMillisecondsLvl2", 100)) && m_Seconds == PlayerPrefs.GetInt("HighScoreSecondsLvl2") && m_Minutes == PlayerPrefs.GetInt("HighScoreMinutesLvl2")))
         {
-            PlayerPrefs.SetInt("HighScoreMinutes", m_Minutes);
-            PlayerPrefs.SetInt("HighScoreSeconds", m_Seconds);
-            PlayerPrefs.SetFloat("HighScoreMilliseconds", m_Milliseconds);
+            PlayerPrefs.SetInt("HighScoreMinutesLvl2", m_Minutes);
+            PlayerPrefs.SetInt("HighScoreSecondsLvl2", m_Seconds);
+            PlayerPrefs.SetFloat("HighScoreMillisecondsLvl2", m_Milliseconds);
 
             m_PlayerHighScore.text = m_Minutes.ToString() + ":" + m_Seconds.ToString() + ":" + m_Milliseconds.ToString("00");
 
             m_NewRecord.SetActive(true);
-            m_SoundManager.Play("NewRecord");
         }
-        
+
     }
 
     public void Restart()

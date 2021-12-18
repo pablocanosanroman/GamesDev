@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -47,6 +46,12 @@ public class Character_Movement : MonoBehaviour
 
     private RaycastHit2D m_RaycastHit2dHead;
 
+    [SerializeField] private GameObject m_GameOverCanvas;
+
+    [SerializeField] private GameObject m_InGameCanvas;
+
+    [SerializeField] private SoundManager m_SoundManager;
+
     //[SerializeField] private GravityPlatformInteraction m_GravityPlatform;
     //[SerializeField] private AntiGravityInteraction m_AntiGravity;
 
@@ -65,6 +70,7 @@ public class Character_Movement : MonoBehaviour
     {
         m_MoreGravityEnabled = false;
         m_AntiGravityEnabled = false;
+        
     }
 
     private void Update()
@@ -80,8 +86,6 @@ public class Character_Movement : MonoBehaviour
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
-
-            
 
         }
 
@@ -103,13 +107,17 @@ public class Character_Movement : MonoBehaviour
             if (IsDead())
             {
                 Destroy(gameObject);
-                SceneManager.LoadScene(5);
+                m_GameOverCanvas.SetActive(true);
+                m_InGameCanvas.SetActive(false);
+                Time.timeScale = 0f;
             }
 
             if (transform.position.y < -150)
             {
                 Destroy(gameObject);
-                SceneManager.LoadScene(5);
+                m_GameOverCanvas.SetActive(true);
+                m_InGameCanvas.SetActive(false);
+                Time.timeScale = 0f;
             }
         }
 
@@ -142,6 +150,8 @@ public class Character_Movement : MonoBehaviour
             {
                 m_RB.AddForce(Vector2.up * m_JumpForce, ForceMode2D.Impulse);
                 m_Animator.SetBool("IsJumping", true);
+
+                m_SoundManager.Play("Jump");
             }
 
             
