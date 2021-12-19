@@ -19,7 +19,6 @@ public class GravityPlatformInteraction : MonoBehaviour
         {
             if (m_Collision)
             {
-                
                 for (int i = 0; i < m_AntiGravityPlatforms.Length; i++)
                 {
                     m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision = false;
@@ -27,14 +26,9 @@ public class GravityPlatformInteraction : MonoBehaviour
                     if(m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision == false)
                     {
                         m_PlayerMovement.m_AntiGravityEnabled = false;
+                        m_PlayerMovement.m_MoreGravityEnabled = true;
                     }
                 }
-
-                if(m_PlayerMovement.m_AntiGravityEnabled == false)
-                {
-                    m_PlayerMovement.m_MoreGravityEnabled = true;
-                }
-                Debug.Log(m_PlayerMovement.m_MoreGravityEnabled);
                 //m_PlayerMovement.GetComponent<Rigidbody2D>().gravityScale = 7f;
                 m_PlayerMovement.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
                 StartCoroutine(NoCollision());

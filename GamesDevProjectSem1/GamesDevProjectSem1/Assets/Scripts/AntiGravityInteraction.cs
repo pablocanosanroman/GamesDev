@@ -26,14 +26,9 @@ public class AntiGravityInteraction : MonoBehaviour
                     if(m_GravityPlatforms[i].GetComponent<GravityPlatformInteraction>().m_Collision == false)
                     {
                         m_PlayerMovement.m_MoreGravityEnabled = false;
+                        m_PlayerMovement.m_AntiGravityEnabled = true;
                     }
                 }
-
-                if(m_PlayerMovement.m_MoreGravityEnabled == false)
-                {
-                    m_PlayerMovement.m_AntiGravityEnabled = true;
-                }
-
                 //m_PlayerMovement.GetComponent<Rigidbody2D>().gravityScale = -5f;
                 m_PlayerMovement.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
                 StartCoroutine(NoCollision());
