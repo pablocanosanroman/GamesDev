@@ -5,16 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour
 {
-    public void GetToStart()
+    [SerializeField] private SceneSwitcher m_SceneSwitcher;
+    public void Restart()
     {
+        SceneManager.LoadScene("Level" + m_SceneSwitcher.m_CurrentLevel.ToString(), LoadSceneMode.Single);
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
-
     }
 
-    public void Exit()
+    public void GetToMainMenu()
     {
-        Application.Quit();
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 }
 

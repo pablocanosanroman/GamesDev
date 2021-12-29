@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3505938399216308955}
   m_Layer: 0
   m_Name: AntiGravityPlatform
-  m_TagString: Ground
+  m_TagString: AntiGravityPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,5 +113,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ada0456e772b1e458d86be8eb13f706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerMovement: {fileID: 0}
+  m_PlayerMovement: {fileID: 3080348426962803466, guid: a5f1c549edbefd84a919f64915789493, type: 3}
   m_Collision: 0

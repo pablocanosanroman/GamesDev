@@ -9,6 +9,7 @@ public class PlayerCoinController : MonoBehaviour
     private int m_MaxCoins = 10;
     public int m_CurrentCoins;
     private float m_MaxSpeedIncreased = (7f/100f);
+    [SerializeField] private SoundManager m_SoundManager;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class PlayerCoinController : MonoBehaviour
         
         if (m_CoinInteract != null)
         {
+            m_SoundManager.Play("Coin");
             m_CurrentCoins++;
             
             m_PlayerMovement.m_MaxSpeed += m_PlayerMovement.m_MaxSpeed * m_MaxSpeedIncreased;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6147528691019088671}
   m_Layer: 0
   m_Name: GravityPlatform
-  m_TagString: Ground
+  m_TagString: GravityPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +113,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8fff66ae0639e46a2b5ff2339c75e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerMovement: {fileID: 0}
+  m_PlayerMovement: {fileID: 3080348426962803466, guid: a5f1c549edbefd84a919f64915789493, type: 3}
   m_Collision: 0
-  m_AntiGravity: {fileID: 0}

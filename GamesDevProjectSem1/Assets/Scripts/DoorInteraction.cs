@@ -30,5 +30,5 @@ public enum TypeOfDoor
     NONE = -1,
     GREEN = 0,
     BLUE = 1,
-    RED = 2
+
 }

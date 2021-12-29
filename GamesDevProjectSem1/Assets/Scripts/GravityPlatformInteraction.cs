@@ -6,7 +6,13 @@ public class GravityPlatformInteraction : MonoBehaviour
 {
     [SerializeField] private Character_Movement m_PlayerMovement;
     public bool m_Collision = false;
-    [SerializeField] private AntiGravityInteraction m_AntiGravity;
+    private GameObject[] m_AntiGravityPlatforms;
+
+    private void Awake()
+    {
+        Debug.Log("Awake");
+        m_AntiGravityPlatforms = GameObject.FindGameObjectsWithTag("AntiGravityPlatform");
+    }
 
     private void FixedUpdate()
     {
@@ -14,13 +20,26 @@ public class GravityPlatformInteraction : MonoBehaviour
         {
             if (m_Collision)
             {
-                m_AntiGravity.m_Collision = false;
-                m_PlayerMovement.m_AirGravity = false;
-                m_PlayerMovement.GetComponent<Rigidbody2D>().gravityScale = 7f;
+                foreach (GameObject antiGravityPlatform in m_AntiGravityPlatforms)
+                {
+                    antiGravityPlatform.GetComponent<AntiGravityInteraction>().m_Collision = false;
+                }
+
+                m_PlayerMovement.m_MoreGravityEnabled = true;
+                m_PlayerMovement.m_AntiGravityEnabled = false;
+                //for (int i = 0; i < m_AntiGravityPlatforms.Length; i++)
+                //{
+                //    m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision = false;
+
+                //    if(m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision == false)
+                //    {
+                //        m_PlayerMovement.m_AntiGravityEnabled = false;
+                //        m_PlayerMovement.m_MoreGravityEnabled = true;
+                //    }
+                //}
                 m_PlayerMovement.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
                 StartCoroutine(NoCollision());
-                
-
+                StartCoroutine(SetGravityFalse());
             }
         }
     }
@@ -37,5 +56,11 @@ public class GravityPlatformInteraction : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         m_Collision = false;
+    }
+
+    IEnumerator SetGravityFalse()
+    {
+        yield return new WaitForSeconds(1.1f);
+        m_PlayerMovement.m_MoreGravityEnabled = false;
     }
 }

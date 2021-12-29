@@ -16,6 +16,7 @@ public class WinUI : MonoBehaviour
     [SerializeField] private GameObject m_WinCanvas;
     [SerializeField] private GameObject m_NewRecord;
     [SerializeField] private SceneSwitcher m_SceneSwitcher;
+    [SerializeField] private SoundManager m_SoundManager;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class WinUI : MonoBehaviour
 
     private void Update()
     {
+        
         PlayerTime();
         
     }
@@ -46,6 +48,7 @@ public class WinUI : MonoBehaviour
             m_PlayerHighScore.text = m_Minutes.ToString() + ":" + m_Seconds.ToString() + ":" + m_Milliseconds.ToString("00");
 
             m_NewRecord.SetActive(true);
+            m_SoundManager.Play("NewRecord");
         }
         
     }

@@ -8,6 +8,7 @@ public class PlayerSpeedBController : MonoBehaviour
     private Rigidbody2D m_RB;
     private Character_Movement m_PlayerMovement;
     [SerializeField] private float m_SpeedBoost;
+    [SerializeField] private SoundManager m_SoundManager;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class PlayerSpeedBController : MonoBehaviour
 
         if (m_SpeedBInteract != null)
         {
+            m_SoundManager.Play("SpeedBoost");
             m_PlayerMovement.m_EnableCapVelocity = false;
             m_RB.AddForce(Vector2.right * m_SpeedBoost, ForceMode2D.Impulse);
             StartCoroutine(SpeedBoostTime());

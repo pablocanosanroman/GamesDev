@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -29,7 +28,9 @@ public class Character_Movement : MonoBehaviour
 
     private bool m_WhatsGrounded;
 
-    public bool m_AirGravity;
+    public bool m_MoreGravityEnabled;
+
+    public bool m_AntiGravityEnabled;
 
     private float m_ActionSpeedBoost = 1f;
 
@@ -45,6 +46,15 @@ public class Character_Movement : MonoBehaviour
 
     private RaycastHit2D m_RaycastHit2dHead;
 
+    [SerializeField] private GameObject m_GameOverCanvas;
+
+    [SerializeField] private GameObject m_InGameCanvas;
+
+    [SerializeField] private SoundManager m_SoundManager;
+
+    //[SerializeField] private GravityPlatformInteraction m_GravityPlatform;
+    //[SerializeField] private AntiGravityInteraction m_AntiGravity;
+
 
     private void Awake()
     {
@@ -56,10 +66,17 @@ public class Character_Movement : MonoBehaviour
 
         m_Animator = GetComponent<Animator>();
     }
+    private void Start()
+    {
+        m_MoreGravityEnabled = false;
+        m_AntiGravityEnabled = false;
+        
+    }
 
     private void Update()
     {
-        if(gameObject != null)
+        
+        if (gameObject != null)
         {
             if (Input.GetAxisRaw("Horizontal") < 0 && IsGrounded())
             {
@@ -70,8 +87,6 @@ public class Character_Movement : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
 
-            
-
         }
 
 
@@ -81,6 +96,7 @@ public class Character_Movement : MonoBehaviour
     {
         if(gameObject != null)
         {
+            
             ApplyMovement();
 
             if (m_EnableCapVelocity)
@@ -91,13 +107,17 @@ public class Character_Movement : MonoBehaviour
             if (IsDead())
             {
                 Destroy(gameObject);
-                SceneManager.LoadScene(5);
+                m_GameOverCanvas.SetActive(true);
+                m_InGameCanvas.SetActive(false);
+                Time.timeScale = 0f;
             }
 
             if (transform.position.y < -150)
             {
                 Destroy(gameObject);
-                SceneManager.LoadScene(5);
+                m_GameOverCanvas.SetActive(true);
+                m_InGameCanvas.SetActive(false);
+                Time.timeScale = 0f;
             }
         }
 
@@ -119,7 +139,8 @@ public class Character_Movement : MonoBehaviour
 
         if(IsGrounded())
         {
-            m_AirGravity = true;
+            m_MoreGravityEnabled = false;
+            m_AntiGravityEnabled = false;
             m_RB.gravityScale = 8f;
             m_WhatsGrounded = true;
             SlopeRotationCheck();
@@ -129,20 +150,27 @@ public class Character_Movement : MonoBehaviour
             {
                 m_RB.AddForce(Vector2.up * m_JumpForce, ForceMode2D.Impulse);
                 m_Animator.SetBool("IsJumping", true);
+
+                m_SoundManager.Play("Jump");
             }
 
             
         }
         else
         {
-            if(m_AirGravity)
-            {
-                m_RB.gravityScale = 1f;
-            }
-            else
+            m_RB.gravityScale = 1f;
+
+            if (m_MoreGravityEnabled)
             {
                 m_RB.gravityScale = 7f;
             }
+
+            if (m_AntiGravityEnabled)
+            {
+                m_RB.gravityScale = -5f;
+            }
+            
+
             m_Animator.SetBool("IsJumping", false);
             Vector3 Rotation = new Vector3(0f, 0f, -RotationForce);
 
