@@ -13,22 +13,30 @@ public class AntiGravityInteraction : MonoBehaviour
         m_GravityPlatforms = GameObject.FindGameObjectsWithTag("GravityPlatform");
     }
 
-    private void FixedUpdate()
+    private void Update()
     { 
         if (m_PlayerMovement != null)
         { 
             if (m_Collision)
             {
-                for(int i = 0; i < m_GravityPlatforms.Length; i++)
+                foreach(GameObject gravityPlatform in m_GravityPlatforms)
                 {
-                    m_GravityPlatforms[i].GetComponent<GravityPlatformInteraction>().m_Collision = false;
-
-                    if(m_GravityPlatforms[i].GetComponent<GravityPlatformInteraction>().m_Collision == false)
-                    {
-                        m_PlayerMovement.m_MoreGravityEnabled = false;
-                        m_PlayerMovement.m_AntiGravityEnabled = true;
-                    }
+                    gravityPlatform.GetComponent<GravityPlatformInteraction>().m_Collision = false;
                 }
+
+                m_PlayerMovement.m_MoreGravityEnabled = false;
+                m_PlayerMovement.m_AntiGravityEnabled = true;
+
+                //for (int i = 0; i < m_GravityPlatforms.Length; i++)
+                //{
+                //    m_GravityPlatforms[i].GetComponent<GravityPlatformInteraction>().m_Collision = false;
+
+                //    if(m_GravityPlatforms[i].GetComponent<GravityPlatformInteraction>().m_Collision == false)
+                //    {
+                //        m_PlayerMovement.m_MoreGravityEnabled = false;
+                //        m_PlayerMovement.m_AntiGravityEnabled = true;
+                //    }
+                //}
                 //m_PlayerMovement.GetComponent<Rigidbody2D>().gravityScale = -5f;
                 m_PlayerMovement.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
                 StartCoroutine(NoCollision());

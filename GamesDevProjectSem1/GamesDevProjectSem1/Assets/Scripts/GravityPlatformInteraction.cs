@@ -13,26 +13,32 @@ public class GravityPlatformInteraction : MonoBehaviour
         m_AntiGravityPlatforms = GameObject.FindGameObjectsWithTag("AntiGravityPlatform");
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (m_PlayerMovement != null)
         {
             if (m_Collision)
             {
-                for (int i = 0; i < m_AntiGravityPlatforms.Length; i++)
+                foreach (GameObject antiGravityPlatform in m_AntiGravityPlatforms)
                 {
-                    m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision = false;
-
-                    if(m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision == false)
-                    {
-                        m_PlayerMovement.m_AntiGravityEnabled = false;
-                        m_PlayerMovement.m_MoreGravityEnabled = true;
-                    }
+                    antiGravityPlatform.GetComponent<AntiGravityInteraction>().m_Collision = false;
                 }
-                //m_PlayerMovement.GetComponent<Rigidbody2D>().gravityScale = 7f;
+
+                m_PlayerMovement.m_MoreGravityEnabled = true;
+                m_PlayerMovement.m_AntiGravityEnabled = false;
+                //for (int i = 0; i < m_AntiGravityPlatforms.Length; i++)
+                //{
+                //    m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision = false;
+
+                //    if(m_AntiGravityPlatforms[i].GetComponent<AntiGravityInteraction>().m_Collision == false)
+                //    {
+                //        m_PlayerMovement.m_AntiGravityEnabled = false;
+                //        m_PlayerMovement.m_MoreGravityEnabled = true;
+                //    }
+                //}
                 m_PlayerMovement.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
                 StartCoroutine(NoCollision());
-                //StartCoroutine(SetGravityFalse());
+                StartCoroutine(SetGravityFalse());
             }
         }
     }
