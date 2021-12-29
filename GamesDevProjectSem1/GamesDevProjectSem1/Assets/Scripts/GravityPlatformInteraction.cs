@@ -10,10 +10,11 @@ public class GravityPlatformInteraction : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Awake");
         m_AntiGravityPlatforms = GameObject.FindGameObjectsWithTag("AntiGravityPlatform");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (m_PlayerMovement != null)
         {

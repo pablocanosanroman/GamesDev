@@ -13,7 +13,7 @@ public class AntiGravityInteraction : MonoBehaviour
         m_GravityPlatforms = GameObject.FindGameObjectsWithTag("GravityPlatform");
     }
 
-    private void Update()
+    private void FixedUpdate()
     { 
         if (m_PlayerMovement != null)
         { 
