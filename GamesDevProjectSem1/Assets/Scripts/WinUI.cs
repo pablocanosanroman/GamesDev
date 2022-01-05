@@ -12,8 +12,6 @@ public class WinUI : MonoBehaviour
     public int m_Seconds;
     public float m_Milliseconds;
     [SerializeField] private GameObject m_Goal;
-    [SerializeField] private GameObject m_InGameCanvas;
-    [SerializeField] private GameObject m_WinCanvas;
     [SerializeField] private GameObject m_NewRecord;
     [SerializeField] private SceneSwitcher m_SceneSwitcher;
     [SerializeField] private SoundManager m_SoundManager;

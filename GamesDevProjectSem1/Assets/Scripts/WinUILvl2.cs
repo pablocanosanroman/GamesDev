@@ -12,10 +12,11 @@ public class WinUILvl2 : MonoBehaviour
     public int m_Seconds;
     public float m_Milliseconds;
     [SerializeField] private GameObject m_Goal;
-    [SerializeField] private GameObject m_InGameCanvas;
-    [SerializeField] private GameObject m_WinCanvas;
+    //[SerializeField] private GameObject m_InGameCanvas;
+    //[SerializeField] private GameObject m_WinCanvas;
     [SerializeField] private GameObject m_NewRecord;
     [SerializeField] private SceneSwitcher m_SceneSwitcher;
+    [SerializeField] private SoundManager m_SoundManager;
 
     private void Start()
     {
@@ -46,6 +47,7 @@ public class WinUILvl2 : MonoBehaviour
             m_PlayerHighScore.text = m_Minutes.ToString() + ":" + m_Seconds.ToString() + ":" + m_Milliseconds.ToString("00");
 
             m_NewRecord.SetActive(true);
+            m_SoundManager.Play("NewRecord");
         }
 
     }

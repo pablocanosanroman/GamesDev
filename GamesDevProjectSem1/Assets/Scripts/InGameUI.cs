@@ -15,7 +15,11 @@ public class InGameUI : MonoBehaviour
     public int m_Minutes;
     public int m_Seconds;
     public float m_Milliseconds;
-    
+    [SerializeField] private GameObject m_WinCanvas;
+    [SerializeField] private GameObject m_InGameCanvas;
+    [SerializeField] private GameObject m_GameOverCanvas;
+    [SerializeField] private GameObject m_PauseCanvas;
+
     public void Init()
     {
         //Get reference to the text
@@ -32,7 +36,15 @@ public class InGameUI : MonoBehaviour
 
     private void Update()
     {
-        
+        if (!m_GameOverCanvas.activeInHierarchy || !m_WinCanvas.activeInHierarchy)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                m_PauseCanvas.SetActive(true);
+                m_InGameCanvas.SetActive(false);
+                Time.timeScale = 0;
+            }
+        }
         ChangeCoinsText();
         Timer();
     }
