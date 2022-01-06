@@ -5,7 +5,7 @@ using UnityEngine;
 public class AntiGravityInteraction : MonoBehaviour
 {
     [SerializeField] private Character_Movement m_PlayerMovement;
-    public bool m_Collision = false;
+    public bool m_Collision;
     private GameObject[] m_GravityPlatforms;
 
     private void Awake()
@@ -13,19 +13,22 @@ public class AntiGravityInteraction : MonoBehaviour
         m_GravityPlatforms = GameObject.FindGameObjectsWithTag("GravityPlatform");
     }
 
-    private void FixedUpdate()
+    private void Update()
     { 
         if (m_PlayerMovement != null)
         { 
             if (m_Collision)
             {
-                foreach(GameObject gravityPlatform in m_GravityPlatforms)
+                
+
+                foreach (GameObject gravityPlatform in m_GravityPlatforms)
                 {
                     gravityPlatform.GetComponent<GravityPlatformInteraction>().m_Collision = false;
                 }
 
                 m_PlayerMovement.m_MoreGravityEnabled = false;
                 m_PlayerMovement.m_AntiGravityEnabled = true;
+
 
                 //for (int i = 0; i < m_GravityPlatforms.Length; i++)
                 //{
@@ -47,10 +50,11 @@ public class AntiGravityInteraction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.root.CompareTag("Player"))
-        {
-            m_Collision = true;
-        }
+        m_Collision = true;
+        //if (collision.transform.root.CompareTag("Player"))
+        //{
+        //    m_Collision = true;
+        //}
     }
 
     IEnumerator NoCollision()

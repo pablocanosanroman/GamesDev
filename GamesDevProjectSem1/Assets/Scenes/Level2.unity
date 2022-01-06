@@ -8624,7 +8624,7 @@ MonoBehaviour:
   m_Goal: {fileID: 1646852454}
   m_NewRecord: {fileID: 818823330}
   m_SceneSwitcher: {fileID: 1363793559}
-  m_SoundManager: {fileID: 0}
+  m_SoundManager: {fileID: 1194877267}
 --- !u!114 &1372211914
 MonoBehaviour:
   m_ObjectHideFlags: 0
